@@ -14,7 +14,7 @@
   <style>
     #fileMgr .upload-box {
       width: 94%;
-      height: 300px;
+      height: auto;
       /*border: 1px solid gray;*/
       border-style: dashed;
       box-shadow: 2px 3px 9px hsl(0, 0%, 47%);
@@ -67,7 +67,7 @@
     function onFileChange() {
       const reader = new FileReader(); // File reader to read the file
       const parent = upload.parentElement;
-      const isCard =(n)=>n.includes("card");
+      const isCard =(n)=>n.toLowerCase().includes("card");
       let tree = document.createElement('div');
       let res = null;
       // Make sure a file was selected
