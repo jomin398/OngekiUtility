@@ -15,7 +15,13 @@ const SitePatch = {
           "본 홈페이지 이하 사이트는 공유목적을 위해 사용되어야되며,",
           "컨텐츠의 저작권은 각각 컨텐츠들의 주인에게 있습니다.",
           "크래이티브 커먼즈 라이센스 이하 CCL을 따르기에",
-          "컨텐츠의 저작권에 따라서 리버스엔지니어링, 무단 디컴파일, 재배포는 절대금지 합니다."
+          "컨텐츠의 저작권에 따라서 리버스엔지니어링,",
+          "무단 디컴파일, 재배포는 절대금지 합니다.",
+          null
+        ],
+        [
+          "(클릭해주세요)",
+          "(Enter 키를 누르세요)"
         ]
       ],
   eng: [
@@ -34,7 +40,12 @@ const SitePatch = {
           "THIS WEBSITE(AS CALL AS SITE) SHALL BE USED FOR SHARING PURPOSES.",
           "THE COPYRIGHT OF THE CONTENT BELONGS TO THE OWNER OF THE CONTENT.",
           "FOLLOW THE COPYRIGHT OF CONTENT BELONGS THE CCL, NAMED AS CREATIVE COMMONS LICENSE",
-          "REVERSE ENGINEERING, DECOMPILE, REDISTRIBUTION IS ABSOLUTELY PROHIBITED."
+          "REVERSE ENGINEERING, DECOMPILE, REDISTRIBUTION IS ABSOLUTELY PROHIBITED.",
+          null
+        ],
+        [
+          "(waiting for click to next...)",
+          "(Press Enter key)"
         ]
       ]
 };
@@ -172,17 +183,23 @@ function BiosInit() {
   let h1 = document.createElement('h1');
   h1.innerText = Patch[6][0];
   let text = document.createElement('div');
-  text.innerText = Patch[6].slice(1).join('\n');
+  text.innerText = Patch[6].slice(1).concat(isMob?Patch[7][0]:Patch[7][1]).join('\n');
   warn.append(h1,text);
-  setTimeout(()=>{
-    warn.classList.remove("fade-in");
-    warn.classList.add("fade-out");
-    setTimeout(() => {
-      warn.remove();
-      document.body.style.backgroundColor = 'initial';
-      logoInit()
-    }, 3100)
-  },3100);
+  let next = ()=>{warn.remove();
+  document.body.style.backgroundColor = 'initial';
+  logoInit()
+  }
+  if(isMob){
+    warn.addEventListener('click', () => {
+      next();
+    });
+  }else{
+    warn.addEventListener('keyup',(e)=>{
+      if(e.code === 'Enter'){
+        next();
+      }
+    })
+  }
   document.body.insertAdjacentElement('afterbegin', warn)
 }
 
@@ -199,7 +216,7 @@ function logoInit(){
     setTimeout(()=>{
       b.remove();
       UserInit();
-    },1000)
+    },1000);
   },3000)
 }
 
@@ -209,6 +226,7 @@ function UserInit() {
   let titleScr = document.createElement("zero-md");
 
   titleScr.setAttribute('src', 'README.md');
+  titleScr.style.textAlign = 'center';
   document.body.insertAdjacentElement('beforeend', titleScr);
   acadebtn(() => {
     addFileZone();

@@ -1,5 +1,5 @@
-.ShowPageBtnWrapper{
-  display:flex;
+.ShowPageBtnWrapper {
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -141,7 +141,7 @@
   color: white
 }
 
-.warn{
+.warn {
   font-size: 1.2rem;
   width: 100%;
   height: auto;
@@ -151,40 +151,52 @@
   /*중앙정렬*/
   text-align: center;
   position: relative;
+  letter-spacing: 2px;
 }
-.warn.fade-in{
+
+.warn.fade-in {
   animation: fadein 3s;
 }
+
 .warn.fade-out {
   animation: fadeout 3s;
   opacity: 0;
 }
-div#init-logo{
+
+div#init-logo {
   width: 100%;
   height: auto;
   display: flex;
   justify-content: center;
-  margin-top: 50%;
-  padding: 100px auto;
+  margin: 50% 0;
   animation: fadein 1s;
 }
-#init-logo img{
+
+#init-logo img {
   width: 50%;
+}
+@media screen and (orientation: landscape) {
+  div#init-logo {
+    margin-top: 100px;
+  }
 }
 
 @keyframes fadein {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
+
 @keyframes fadeout {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
