@@ -10,93 +10,47 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://rawgit.com/abodelot/jquery.json-viewer/master/json-viewer/jquery.json-viewer.js"></script>
   <link href="https://rawgit.com/abodelot/jquery.json-viewer/master/json-viewer/jquery.json-viewer.css" rel="stylesheet" />
-  <!-- Custom Styles -->
-  <style>
-    #fileMgr .upload-box {
-      width: 94%;
-      height: auto;
-      /*border: 1px solid gray;*/
-      border-style: dashed;
-      box-shadow: 2px 3px 9px hsl(0, 0%, 47%);
-      padding: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="./css/mein.css" type="text/css" media="all" />
+  <script src="./js/devCard.js" type="text/javascript"></script>
+  <script src="./js/chrMgr.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+  <link rel="stylesheet" href="./css/ArcadeButton.css" type="text/css" media="all" />
+  <script src="./js/mein.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
+  <zero-md src="README.md"></zero-md>
+  <selection id="fileMgr"></selection>
+  <div id="masthead" style="display: none">
+    <div id="masthead-content">
+      <div id="character-detail">
+        <div class="content character-detail">
+          <div class="content-title">
+          </div>
+          <img alt="" class="character-detail__body">
+        </div>
+        <div class="modal-btn modal-btn--prev"><i class="fas fa-chevron-left"></i></div>
+        <div class="modal-btn modal-btn--next"><i class="fas fa-chevron-right"></i></div>
+      </div>
+    </div>
+  </div>
   <script type="text/javascript" charset="utf-8">
     const userLang = navigator.language;
+    const isDebug = true;
+    const isPC = () => {
+      return ((window.innerWidth <= 800) && (window.innerHeight <= 600));
+    }
     var isKor = userLang == "ko-KR";
-    const SitePatch = {
-      kor: [
-        "카드 파일을 업로드 해주세요.",
-        "드래그 드롭가능",
-        "카드 파일 뷰어"
-      ],
-      eng: [
-        "plz...upload card file",
-        "(you can drop-down file here)",
-        "card file viewer"
-      ]
-    }
-    isKor = false;
+    
 
-    function addFileZone() {
-      let Patch = !isKor ? SitePatch.eng : SitePatch.kor;
-      let w = document.createElement('selection');
-      w.id = 'fileMgr';
-      let h = document.createElement('h1');
-      h.appendChild(document.createTextNode(Patch[0]));
-      let fw = document.createElement('div');
-      fw.className = 'upload-box';
-      let f = document.createElement('input');
-      f.id = 'fileInput';
-      f.type = 'file';
-      f.accept = 'application/JSON';
-      f.required = true;
-      fw.appendChild(f);
-      let t = document.createElement('div');
-      t.innerText = Patch[1];
-      w.append(h, fw);
-      document.body.appendChild(w)
-    }
-    addFileZone();
-    //file
-    var upload = document.getElementById('fileInput');
-
-    function onFileChange() {
-      const reader = new FileReader(); // File reader to read the file
-      const parent = upload.parentElement;
-      const isCard =(n)=>n.toLowerCase().includes("card");
-      let tree = document.createElement('div');
-      let res = null;
-      // Make sure a file was selected
-      if (upload.files.length > 0) {
-        reader.readAsText(upload.files[0]); // Read the uploaded file
-        // This event listener will happen when the reader has read the file
-        reader.addEventListener('load', function() {
-          if(isCard(upload.files[0].name)){
-          res = JSON.parse(reader.result); // Parse the result into an object
-          upload.remove();
-          parent.style.overflow = 'auto';
-          tree.id = 'jsonTree';
-          parent.appendChild(tree);
-          $(function() {
-            $('#jsonTree').jsonViewer(res);
-          });
-          
-          console.log(res);
-          }else{
-            console.log("card check:",isCard(upload.files[0].name));
-            upload.value = null;
-          }
-        });
-      }
-    }
-    if (upload) {
-      upload.addEventListener('change', onFileChange);
-    }
-  </script>
+    var Patch = null;
+    const DB = {};
+    const FS = new FileReader(); // File reader to read the file
+    var upload = null;
+    window.onload=()=>UserInit();
+    </script>
 </body>
 
 </html>
