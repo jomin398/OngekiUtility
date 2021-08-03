@@ -21,7 +21,6 @@
 </head>
 
 <body>
-  <zero-md src="README.md"></zero-md>
   <selection id="fileMgr"></selection>
   <div id="masthead" style="display: none">
     <div id="masthead-content">
@@ -38,7 +37,7 @@
   </div>
   <script type="text/javascript" charset="utf-8">
     const userLang = navigator.language;
-    const isDebug = true;
+    var isDebug = false;
     const isPC = () => {
       return ((window.innerWidth <= 800) && (window.innerHeight <= 600));
     }
@@ -49,7 +48,8 @@
     const DB = {};
     const FS = new FileReader(); // File reader to read the file
     var upload = null;
-    window.onload=()=>UserInit();
+    //window.onload=()=>UserInit();
+    window.onload=()=>BiosInit();
     </script>
 </body>
 
